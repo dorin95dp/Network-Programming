@@ -1,4 +1,3 @@
-import java.lang.Thread;
 
 public class MyThread extends Thread {
     private int ID;
@@ -7,12 +6,9 @@ public class MyThread extends Thread {
         this.ID = ID;
     }
 
-    public int getID() {
-        return ID;
-    }
-
     @Override
     public void run() {
+
         System.out.println(ID);
     }
 
