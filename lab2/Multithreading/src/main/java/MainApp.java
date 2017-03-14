@@ -1,3 +1,5 @@
+import java.util.Optional;
+
 public class MainApp {
 
     public static void main(String []args) throws InterruptedException {
@@ -18,13 +20,16 @@ public class MainApp {
 
         Semaphore semaphore = new Semaphore();
 
-        SendingThread sender = new SendingThread(semaphore);
+//        SendingThread sender = new SendingThread(semaphore);
+//        ReceivingThread receiver = new ReceivingThread(semaphore);
+//
+//        sender.start();
+//        receiver.start();
+        ThreadM threadM = new ThreadM(semaphore);
+        ThreadR threadR = new ThreadR(semaphore);
 
-        ReceivingThread receiver = new ReceivingThread(semaphore);
-
-        sender.start();
-        receiver.start();
-
+        threadM.start();
+        threadR.start();
 
 
 
