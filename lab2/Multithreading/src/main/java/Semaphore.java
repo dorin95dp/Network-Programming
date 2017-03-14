@@ -1,15 +1,17 @@
-//public class Semaphore {
-//    public int value;
-//
-//    Semaphore(int value) {
-//        this.value = value;
-//    }
-//
-//    public void signal() {
-//        value++;
-//    }
-//
-//    public void wait1() {
-//        value--;
-//    }
-//}
+public class Semaphore {
+    private boolean signal = false;
+
+    public synchronized void take() {
+        this.signal = true;
+        this.notify();
+    }
+
+    public synchronized void release() throws InterruptedException {
+        while (!this.signal) {
+            wait();
+        }
+
+        this.signal = false;
+    }
+
+}

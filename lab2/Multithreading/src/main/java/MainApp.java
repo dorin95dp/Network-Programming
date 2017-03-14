@@ -1,32 +1,30 @@
-import java.util.concurrent.*;
-
 public class MainApp {
-
-//    static Semaphore s = new Semaphore(0);
-    static Semaphore s = new Semaphore(0, true);
-
 
     public static void main(String []args) throws InterruptedException {
 
-        MyThread t1 = new MyThread();
-        t1.setID(1);
+//        MyThread t1 = new MyThread();
+//        t1.setID(1);
+//
+//        Runnable t2 = () -> {
+//            System.out.println("BBB");
+//        };
+//        Runnable t3 = () -> {
+//            System.out.println("CCC");
+//        };
+//
+//        t1.start();
+//        t2.run();
+//        t3.run();
 
-        Runnable t2 = () -> {
-            try {
-                s.acquire();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("BBB");
-        };
-        Runnable t3 = () -> {
-            System.out.println("CCC");
-            s.release();
-        };
+        Semaphore semaphore = new Semaphore();
 
-        t1.start();
-        t2.run();
-        t3.run();
+        SendingThread sender = new SendingThread(semaphore);
+
+        ReceivingThread receiver = new ReceivingThread(semaphore);
+
+        sender.start();
+        receiver.start();
+
 
 
 
