@@ -6,8 +6,8 @@ public class SendingThread extends Thread {
         this.semaphore = semaphore;
     }
 
-    public void run(){
-        System.out.println("AAA");
-        this.semaphore.take();
-    }
+//    public void run(){
+//        System.out.println("AAA");
+//        this.semaphore.take();
+//    }
 }
