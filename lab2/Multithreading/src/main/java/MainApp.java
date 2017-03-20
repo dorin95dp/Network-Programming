@@ -1,19 +1,23 @@
+import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
+
 public class MainApp {
 
     public static void main(String []args) throws InterruptedException {
 
-        Semaphore semaphore = new Semaphore();
+        CountDownLatch dependency = new CountDownLatch(2);
 
-//        SendingThread sender = new SendingThread(semaphore);
-//        ReceivingThread receiver = new ReceivingThread(semaphore);
-//
-//        sender.start();
-//        receiver.start();
-        ThreadM threadM = new ThreadM(semaphore);
-        ThreadR threadR = new ThreadR(semaphore);
+        new Activity(Optional.of(() -> System.out.println("Action in 3")),
+                     Optional.of(dependency),
+                     Optional.empty()).start();
 
-        threadM.start();
-        threadR.start();
+        new Activity(Optional.of(() -> System.out.println("Action in 1")),
+                     Optional.empty(),
+                     Optional.of(dependency)).start();
+
+        new Activity(Optional.of(() -> System.out.println("Action in 2")),
+                     Optional.empty(),
+                     Optional.of(dependency)).start();
 
     }
 
