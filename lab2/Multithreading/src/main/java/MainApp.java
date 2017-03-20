@@ -5,20 +5,25 @@ public class MainApp {
 
     public static void main(String []args) throws InterruptedException {
 
-        CountDownLatch dependency = new CountDownLatch(2);
+        CountDownLatch latch = new CountDownLatch(1);
+        // threadM - the signalizer thread M
+        Activity threadM =  new Activity(Optional.of(() -> System.out.println("111")),
+                Optional.empty(),
+                Optional.of(latch)
+        );
+        // the receiver thread R
+        Activity threadR =  new Activity(
+                Optional.of(() -> {
+                    new Thread25().start();
+                    new Thread36().start();
+                    new Thread47().start();
 
-        new Activity(Optional.of(() -> System.out.println("Action in 3")),
-                     Optional.of(dependency),
-                     Optional.empty()).start();
+                }),
+                Optional.of(latch),
+                Optional.empty()
+        );
 
-        new Activity(Optional.of(() -> System.out.println("Action in 1")),
-                     Optional.empty(),
-                     Optional.of(dependency)).start();
-
-        new Activity(Optional.of(() -> System.out.println("Action in 2")),
-                     Optional.empty(),
-                     Optional.of(dependency)).start();
-
+        threadM.start();
+        threadR.start();
     }
-
 }
