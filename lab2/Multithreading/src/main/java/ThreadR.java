@@ -1,3 +1,5 @@
+import java.util.concurrent.*;
+
 public class ThreadR extends Thread {
     Semaphore semaphore = null;
 
@@ -15,13 +17,14 @@ public class ThreadR extends Thread {
         System.out.println("RRR");
 
         Runnable threadA = () -> {
-            System.out.println("AAA");
-            SendingThread thread2 = new SendingThread(semaphore) {
+//            System.out.println("AAA");
+            Semaphore s25 = new Semaphore();
+            SendingThread thread2 = new SendingThread(s25) {
                 public void run() {
                     System.out.println("222");
                 }
             };
-            ReceivingThread thread5 = new ReceivingThread(semaphore) {
+            ReceivingThread thread5 = new ReceivingThread(s25) {
                 public void run() {
                     System.out.println("555");
                 }
@@ -30,13 +33,14 @@ public class ThreadR extends Thread {
             thread5.start();
         };
         Runnable threadB = () -> {
-            System.out.println("BBB");
-            SendingThread thread3 = new SendingThread(semaphore) {
+//            System.out.println("BBB");
+            Semaphore s36 = new Semaphore();
+            SendingThread thread3 = new SendingThread(s36) {
                 public void run() {
                     System.out.println("333");
                 }
             };
-            ReceivingThread thread6 = new ReceivingThread(semaphore) {
+            ReceivingThread thread6 = new ReceivingThread(s36) {
                 public void run() {
                     System.out.println("666");
                 }
@@ -45,13 +49,14 @@ public class ThreadR extends Thread {
             thread6.start();
         };
         Runnable threadC = () -> {
-            System.out.println("CCC");
-            SendingThread thread4 = new SendingThread(semaphore) {
+//            System.out.println("CCC");
+            Semaphore s47 = new Semaphore();
+            SendingThread thread4 = new SendingThread(s47) {
                 public void run() {
                     System.out.println("444");
                 }
             };
-            ReceivingThread thread7 = new ReceivingThread(semaphore) {
+            ReceivingThread thread7 = new ReceivingThread(s47) {
                 public void run() {
                     System.out.println("777");
                 }

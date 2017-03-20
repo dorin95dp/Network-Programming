@@ -7,7 +7,7 @@ public class ThreadM extends Thread {
     }
 
     public void run(){
-        System.out.println("MMM");
+        System.out.println("111");
         this.semaphore.take();
     }
 }
