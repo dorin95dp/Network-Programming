@@ -7,6 +7,18 @@
     <groupId>Dorin</groupId>
     <artifactId>lab3</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>Dorin</groupId>
+            <artifactId>lab3</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.4</version>
+        </dependency>
+    </dependencies>
 
-    
+
 </project>
