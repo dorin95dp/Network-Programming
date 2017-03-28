@@ -9,6 +9,8 @@ import org.apache.http.impl.client.HttpClients;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -16,12 +18,14 @@ public class Main {
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        HttpUriRequest request = new HttpGet("http://lab3midps.96.lt/"); // http://httpbin.org/ip
+        HttpUriRequest request = new HttpGet("http://httpbin.org/ip");
         System.out.println("Requesting: " + request.getURI());
         HttpResponse response = httpClient.execute(request);
 
-        printResponse(response);
+        System.out.println("The response has URLs: " + hasURL(response));
 
+//        response = httpClient.execute(request);
+//        printResponse(response);
     }
 
     private static void printResponse(HttpResponse response) throws IOException {
@@ -33,6 +37,22 @@ public class Main {
         }
     }
 
-}
+    private static boolean hasURL(String line) {
+        String urlRegex = "^(http|https)://[-a-zA-Z0-9+&@#/%?=~_|,!:.;]*[-a-zA-Z0-9+@#/%=&_|]";
+        Pattern pattern = Pattern.compile(urlRegex);
+        Matcher m = pattern.matcher(line);
 
-// http://bethecoder.com/applications/tutorials/tools-and-libs/commons-http-client/how-to-make-http-head-request.html
+        return m.matches();
+    }
+
+    private static boolean hasURL(HttpResponse response) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+        String line = "";
+        while ((line = reader.readLine()) != null) {
+            if (hasURL(line)) return true;
+        }
+
+        return false;
+    }
+}
